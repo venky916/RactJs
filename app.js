@@ -15,7 +15,7 @@ const HeaderComponent = () => {
         <h2>this is h2</h2>
     </div>);
 };
-
+//without composition Component
 const HeaderComponent2 = () =>
 (<div>
     <h1>Nameste React Functional Component</h1>
