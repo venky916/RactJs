@@ -9,8 +9,11 @@ const Title =() => (<h1 id="title" key="h3"> Title React</h1>);
 const HeaderComponent = () => {
     return (<div>
         {heading}
-        <Title/> //Component composition
-        {Title()},{console.log("hello")},{xyz}
+        {/* Component composition */}
+        <Title/> 
+        {Title()}
+        {console.log("hello")}
+        {xyz}
         <h1>Namaste React Functional Component</h1>
         <h2>this is h2</h2>
     </div>);
