@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "This a practice",
   "scripts": {
-    "start": "rm -rf .parcel-cache && parcel index.html",
-    "build": "rm -rf .parcel-cache && parcel build",
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
     "test": "jest"
   },
   "repository": {
@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/venky916/RactJs#readme",
   "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "parcel": "^2.12.0",
     "process": "^0.11.10"
   },
@@ -25,7 +27,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
-  "browsersList":[
+  "browsersList": [
     "last 2 version"
   ]
 }
