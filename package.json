@@ -1,0 +1,31 @@
+{
+  "name": "react-practice",
+  "version": "1.0.0",
+  "description": "This a practice",
+  "scripts": {
+    "start": "rm -rf .parcel-cache && parcel index.html",
+    "build": "rm -rf .parcel-cache && parcel build",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/venky916/RactJs.git"
+  },
+  "author": "Venkatesh Maliga",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/venky916/RactJs/issues"
+  },
+  "homepage": "https://github.com/venky916/RactJs#readme",
+  "devDependencies": {
+    "parcel": "^2.12.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "browsersList":[
+    "last 2 version"
+  ]
+}
