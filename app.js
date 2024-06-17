@@ -1,8 +1,47 @@
-export const IMG_CDN_URL = "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
+import React from 'react';
+import ReactDOM from "react-dom/client"
+/*
+Header
+    -Logo(Title)
+    -List Items(Right Side)
+    -Cart
+Body
+    - Search bar
+    - RestaurantCard {many cards}
+        -Image
+        -Name
+        -Rating
+        -Cusinees
+Footer
+    -links
+    -Copyrights
+*/
 
+
+
+//functional component
+const Title = () => (
+    <a href='/'> <img className="logo" src='https://th.bing.com/th/id/R.dd4d1acde8fc22ed40fbce3acde6e99a?rik=%2b8JTWnyz2QTWFg&riu=http%3a%2f%2ffoodvilla.no%2fsrc%2fimg%2flogo.png&ehk=Wphc3mBmMYs0rOR4MjkO1zykcVnnjbx6MEDy3h1PSkw%3d&risl=&pid=ImgRaw&r=0' alt='logo'/></a>)
+
+//React Component
+const Header = () => {
+    return (
+        <div className='header'>
+            <Title/>
+            <div className='nav-items'>
+                <ul>
+                    <li>Home</li>
+                    <li>About</li>
+                    <li>Contact</li>
+                    <li>Cart</li>
+                </ul>
+            </div>
+        </div>
+    );
+};
 
 // RestaurantList is JSON Data for displaying cards
-export const restaurantList = [
+const restaurantList = [
     {
         type: "restaurant",
         data: {
@@ -1819,3 +1858,143 @@ export const restaurantList = [
         subtype: "basic",
     },
 ];
+
+// const RestaurantCard = (props)=>{
+//     console.log(props);
+//     return (
+//         <div className='card'>
+//             <img src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/" + props.restaurant.data?.cloudinaryImageId}/>
+//             <h2>{props.restaurant.data?.name}</h2>
+//             <h3>{props.restaurant.data?.cuisines.join(', ')}</h3>
+//             <h4>{props.restaurant.data?.avgRating} stars</h4>
+//         </div>
+//     )
+// }
+
+// destructuring  props //optional chaining data?.name
+// const RestaurantCard = ({ restaurant}) => {
+//     return (
+//         <div className='card'>
+//             <img src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/" + restaurant.data?.cloudinaryImageId} />
+//             <h2>{restaurant.data?.name}</h2>
+//             <h3>{restaurant.data?.cuisines.join(', ')}</h3>
+//             <h4>{restaurant.data?.avgRating} stars</h4>
+//         </div>
+//     )
+// }
+
+//destructing restaurant.data
+// const RestaurantCard = ({ restaurant }) => {
+//     const {name,cuisines,cloudinaryImageId,avgRating } = restaurant.data;
+//     return (
+//         <div className='card'>
+//             <img src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/" + cloudinaryImageId} />
+//             <h2>{name}</h2>
+//             <h3>{cuisines.join(', ')}</h3>
+//             <h4>{avgRating} stars</h4>
+//         </div>
+//     )
+// }
+
+//props - properties (passing data in to Component (functional or class)
+// const Body = () =>{
+//     return (
+//         <div className='restaurant-list'>
+//             <RestaurantCard restaurant={restaurantList[0]} />
+//             <RestaurantCard restaurant={restaurantList[1]} />
+//             <RestaurantCard restaurant={restaurantList[2]} />
+//             <RestaurantCard restaurant={restaurantList[3]} />
+//             <RestaurantCard restaurant={restaurantList[4]} />
+//             <RestaurantCard restaurant={restaurantList[5]} />
+//         </div>
+//     )
+// }
+
+//destrucurind data props on the fly
+// const RestaurantCard = ({ name, cuisines, cloudinaryImageId, avgRating }) => {
+//     return (
+//         <div className='card'>
+//             {/* <img src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/" + cloudinaryImageId} /> */}
+//             <h2>{name}</h2>
+//             <h3>{cuisines.join(', ')}</h3>
+//             {/* <h4>{avgRating} stars</h4> */}
+//         </div>
+//     )
+// }
+
+// const Body = () => {
+//     return (
+//         <div className='restaurant-list'>
+//             <RestaurantCard name={restaurantList[0].data.name} cuisines={restaurantList[0].data.cuisines} />
+//             <RestaurantCard name={restaurantList[1].data.name} cuisines={restaurantList[1].data.cuisines} />
+//         </div>
+//     )
+// }
+
+const RestaurantCard = ( { name, cuisines, cloudinaryImageId, avgRating } ) => {
+    return (
+        <div className='card'>
+            <img src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/" + cloudinaryImageId} />
+            <h2>{name}</h2>
+            <h3>{cuisines.join(', ')}</h3>
+            <h4>{avgRating} stars</h4>
+        </div>
+    )
+}
+
+//using spread operator as passing params as props
+// const Body = () =>{
+//     return (
+//         <div className='restaurant-list'>
+//             <RestaurantCard {...restaurantList[0].data} />
+//             <RestaurantCard {...restaurantList[1].data} />
+//             <RestaurantCard {...restaurantList[2].data} />
+//             <RestaurantCard {...restaurantList[3].data} />
+//             <RestaurantCard {...restaurantList[4].data} />
+//             <RestaurantCard {...restaurantList[5].data} />
+//         </div>
+//     )
+// }
+
+//map  is best way to do in functional programming rather than (for loop or foreach) best practice
+const Body = () => {
+    return (
+        <div className='restaurant-list'>
+            {
+                restaurantList.map((restaurant)=>{
+                    return (
+                        <RestaurantCard {...restaurant.data} key={restaurant.data.id}/>
+                    )
+                })
+            }
+        </div>
+    )
+}
+
+
+const styleObj={
+    backgroundColor : "red",
+    color :"white",
+    textAlign : "center",
+    fontSize:"20px"
+}
+const Footer = ()=>{
+    return (
+        <h4 style={ styleObj}>Footer</h4>
+    )
+}
+
+const AppLayout = ()=>{
+    return(
+        // <React.Fragment> jsx can have only one parent
+        <>
+            <Header />
+            <Body />
+            <Footer />
+        </>
+        // </React.Fragment> 
+    )
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<AppLayout />);
