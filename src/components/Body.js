@@ -1,26 +1,46 @@
-import { useState } from "react"
-import { restaurantList } from "../constants"
+import { useState,useEffect } from "react"
 import RestaurantCard from "./RestaurantCard"
+import Shimmer from "./schimmerUI";
 
 
 function filterData(searchText, restaurants) {
     const filteredData= restaurants.filter((restaurant) =>
-        restaurant.data.name.toLowerCase().includes(searchText.toLowerCase())
+        restaurant?.info?.name?.toLowerCase().includes(searchText.toLowerCase())
     );
     return filteredData;
 }
 
 
-//map  is best way to do in functional programming rather than (for loop or foreach) best practice
 const Body = () => {
-    // let searchText ="KFC";normal js variable
+    const [allRestaurants, setAllRestaurants]= useState([]);
+    const [fillteredRestaurants, setFillteredRestaurants] = useState([]);
+    const [searchText, setSearchText] = useState("");
 
-    //useState()=>return array, searchText is a local state variable
-    const [searchText, setSearchText] =useState("");//To create state variable
+    // console.log(restaurants);
 
-    // const [searchclicked,setSearchclicked] = useState('false');
-    const [restaurants, setRestaurants] = useState(restaurantList);
-    return (
+    useEffect(()=>{
+        // API Call
+        getRestaurants();
+    }, [])
+
+
+
+    async function getRestaurants(){
+        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING");
+        const json = await data.json();
+        // console.log(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+        // ?.restaurants);
+        setAllRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+            ?.restaurants);
+        setFillteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+            ?.restaurants);
+    }
+    // not render component (Early Return)
+    if (allRestaurants.length===0){
+        return <Shimmer />
+    }
+    // console.log('render()')
+    return (allRestaurants.length === 0)? <Shimmer />:(
         <>
         <div className="search-container">
                 <input type="text" 
@@ -31,34 +51,28 @@ const Body = () => {
                 setSearchText(e.target.value);
                 }}/>
 
-                {/* <h1>{searchclicked}</h1>
-                 <button className="search-btn"
-                onClick={()=>{
-                    if(searchclicked ==="true"){
-                        setSearchclicked('false');
-                    }else{
-                        setSearchclicked('true');
-                    }
-                }}
-                >Search</button> */}
                 <button className="search-btn"
                     onClick={() => {
-                        //need to filter the data
-                        //update the state - restaurants
-                        const data = filterData(searchText, restaurants);
-                        console.log(data);
-                        setRestaurants(data);
+                        const data = filterData(searchText, allRestaurants);
+                        // console.log(data);
+                        setFillteredRestaurants(data);
                     }}
                 >Search</button>
                 
         </div>
         <div className='restaurant-list'>
-            {
-                restaurants.map((restaurant) => {
-                    return ( 
-                        <RestaurantCard {...restaurant.data} key={restaurant.data.id} />
-                    )
-                })
+                {/* {console.log(restaurants)} */}
+            { 
+                (fillteredRestaurants.length===0)?
+                    (<h1> No Restauarnts mathched the Filter.....</h1>)
+                :(
+                    fillteredRestaurants.map((restaurant) => {
+                        return (
+                            <RestaurantCard {...restaurant.info} key={restaurant?.info?.id} />
+                        )
+                    })
+                )
+                
             }
         </div>
         </>
