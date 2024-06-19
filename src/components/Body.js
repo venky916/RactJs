@@ -1,7 +1,7 @@
 import { useState,useEffect } from "react"
 import RestaurantCard from "./RestaurantCard"
 import Shimmer from "./schimmerUI";
-
+import {Link} from 'react-router-dom';
 
 function filterData(searchText, restaurants) {
     const filteredData= restaurants.filter((restaurant) =>
@@ -16,7 +16,7 @@ const Body = () => {
     const [fillteredRestaurants, setFillteredRestaurants] = useState([]);
     const [searchText, setSearchText] = useState("");
 
-    // console.log(restaurants);
+    
 
     useEffect(()=>{
         // API Call
@@ -35,11 +35,6 @@ const Body = () => {
         setFillteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
             ?.restaurants);
     }
-    // not render component (Early Return)
-    if (allRestaurants.length===0){
-        return <Shimmer />
-    }
-    // console.log('render()')
     return (allRestaurants.length === 0)? <Shimmer />:(
         <>
         <div className="search-container">
@@ -54,21 +49,22 @@ const Body = () => {
                 <button className="search-btn"
                     onClick={() => {
                         const data = filterData(searchText, allRestaurants);
-                        // console.log(data);
                         setFillteredRestaurants(data);
                     }}
                 >Search</button>
                 
         </div>
         <div className='restaurant-list'>
-                {/* {console.log(restaurants)} */}
+
             { 
                 (fillteredRestaurants.length===0)?
                     (<h1> No Restauarnts mathched the Filter.....</h1>)
                 :(
                     fillteredRestaurants.map((restaurant) => {
                         return (
-                            <RestaurantCard {...restaurant.info} key={restaurant?.info?.id} />
+                            <Link to={"/restaurant/"+ restaurant?.info?.id} key={restaurant?.info?.id} >
+                            <RestaurantCard {...restaurant.info} />
+                            </Link>
                         )
                     })
                 )

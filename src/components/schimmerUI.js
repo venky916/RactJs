@@ -1,4 +1,3 @@
-import RestaurantCard from "./RestaurantCard"
 const Shimmer = ()=>{
     return(
         <div className="restaurant-list">

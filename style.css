@@ -28,6 +28,9 @@
 .card > img{
     width: 100%;
 }
+.card:hover {
+    transform: scale(1.05);
+}
 
 .restaurant-list{
     display: flex;
@@ -37,6 +40,9 @@
 .shimmer-card{
     width: 200px;
     height: 200px;
-    margin: 20px;
     background-color: lightgrey;
+    margin: 20px;
+}
+.menu{
+    display: flex;
 }
