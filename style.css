@@ -1,3 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ways of using css: 
+Noraml native css
+scss and sass
+inline css
+component libraries - material UI,Base UI,Ant,Cahakra
+Styled Components
+
+Tailwind CSS Framework:
+
+*/
+
+/* 
 .header{
     display: flex;
     justify-content: space-between;
@@ -67,4 +84,5 @@
 .login>button {
     width: 80%;
     height: 40px;
-}
+} */
+

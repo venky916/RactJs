@@ -14,7 +14,7 @@ class About extends Component {
     render(){
         // console.log("parent-render");
         return(
-        <div>
+            <div className="p-2 m-2 box-border bg-gradient-to-r from-violet-500 to-fuchsia-500">
             <h1> About Us Page</h1>
             <p>
                 This is a react router practice thisng working on
