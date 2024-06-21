@@ -1,30 +1,31 @@
 import { useEffect, useState } from "react";
 import Logo from '../assets/img/foodvilla.png';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useOnline from "../utils/useOnline";
+import useLocalStorage from "../utils/useLocalStorage";
+import useAuth from "../utils/useAuth";
 
-const loggedInUSer =()=>{
-    //Api call to check authentication
-    return true;
-}
-
-//functional component
 export const Title = () => (
     <a href='/'> <img className="logo" src={Logo} alt='logo' /></a>
 );
 
-//React Component
 const Header = () => {
-    const [isLoggedIn , setIsLoggedIn]=useState(true);
+    const isOnline=useOnline();
+    const [getLocalStorage,clearLocalstorage]=useLocalStorage("user")
+    const navigate = useNavigate();
 
-    // useEffect(()=>{
-    //     console.log('useEffect');
-    // }, [isLoggedIn])
+    const [isLoggedIn,setIsLoggedIn] = useAuth();
 
-    // console.log('render')
+    useEffect(()=>{
+        if (getLocalStorage==null){
+            setIsLoggedIn(false);
+        }
+    },[getLocalStorage]);
+
     return (
         <div className='header'>
             <Title />
-
+            {(isLoggedIn && <h3>Hi {getLocalStorage?.userName}!</h3>)}
             <div className='nav-items'>
                 <ul>
                     {/* 2 ways */}
@@ -32,10 +33,19 @@ const Header = () => {
                     <Link to="/about"><li>About</li></Link>
                     <Link to="/contact"><li>Contact</li></Link>
                     <li>Cart</li>
+                    <Link to="/instamart"><li>InstaMart</li></Link>
                 </ul>
             </div>
+            <h1>{isOnline ? "✅":"🔴"}</h1>
             {
-                (isLoggedIn ? (<button onClick={()=>setIsLoggedIn(false)}>Log-Out</button>) : (<button onClick={()=>setIsLoggedIn(true)}>Log-In</button>))
+                isLoggedIn ?
+                (<button onClick={()=>{
+                    clearLocalstorage();
+                    setIsLoggedIn(false)
+                }}>Log-Out</button>) :
+                (<button onClick={()=>{
+                    navigate("/login");
+                }}>Log-In</button>)
             }
         </div>
     );

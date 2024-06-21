@@ -46,3 +46,25 @@
 .menu{
     display: flex;
 }
+
+.login{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: aqua;
+    width: 700px;
+    height: 700px;
+    transform: translate(400px,10px);
+}
+
+.login>input{
+    width: 80%;
+    height: 40px;
+}
+.login>button {
+    width: 80%;
+    height: 40px;
+}

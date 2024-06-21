@@ -42,28 +42,9 @@ class Profile extends React.Component{
             <img src={this.state.userInfo.avatar_url} />
             <h2> Name : {this.state.userInfo.name} </h2>
             <h3> Location : {this.state.userInfo.location}</h3>
-            {/* <button onClick={()=>{
-                this.setState({
-                    count:count+1,
-                    count2:2,
-                })
-            }}>SetCount</button> */}
         </div>
         )
     }
 }
 
 export default Profile
-
-
-/**
- * child const
- * child render
- * child-didmount
- * apicall
- *      setstate
- * child-render
- * update dom
- * component didupdate
- * 
- */

@@ -1,14 +1,34 @@
-import React from 'react';
+import React , { lazy , Suspense } from 'react';
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from './components/Body';
 import Footer  from './components/Footer';
-import About from './components/About'
 import Contact from './components/Contact';
 import Error from './components/Error';
 import {createBrowserRouter, RouterProvider , Outlet} from "react-router-dom";
 import RestaurantMenu from './components/RestaurantMenu';
 import Profile from './components/Profile';
+import Shimmer from './components/schimmerUI';
+import Login from './components/Login'
+
+/**
+ * All are same
+ * Chunking
+ * code Splitting
+ * Dynamic Bundling
+ * Dynamic Loading
+ * Lazy Loading
+ * On Demand Loading
+ * Dynamic Import
+ * 
+ */
+
+const Instamart  = lazy(()=> import("./components/InstaMart"));
+//upon on demand loading -> upon render -> suspend Loading
+//React tries to suspend it 
+
+const About  = lazy(()=> import("./components/About"));
+
 
 const AppLayout = () => {
     return (
@@ -32,7 +52,9 @@ const appRouter = createBrowserRouter([
             },
             {
                 path: '/about',
-                element: <About />,
+                element: (<Suspense fallback= {<h1>Loading......</h1>}>
+                            <About />
+                            </Suspense>),
                 children :[{
                     path : "profile",
                     element :<Profile />,
@@ -45,9 +67,20 @@ const appRouter = createBrowserRouter([
             {
                 path : "/restaurant/:id",
                 element : <RestaurantMenu />
-            }
-        ]
+            },
+            {
+                path: '/instamart',
+                element: (<Suspense fallback={<Shimmer />}>
+                            <Instamart />
+                            </Suspense>),
+            },
+        ],
     },
+    {
+        path : "login",
+        element : <Login />,
+        errorElement: <Error />,
+    }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
