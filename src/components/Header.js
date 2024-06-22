@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Logo from '../assets/img/foodvilla.png';
 import { Link, useNavigate } from "react-router-dom";
 import useOnline from "../utils/useOnline";
 import useLocalStorage from "../utils/useLocalStorage";
 import useAuth from "../utils/useAuth";
+import userContext from "../utils/userContext";
 
 export const Title = () => (
     <a href='/'> <img className="h-28  p-2" src={Logo} alt='logo' /></a>
@@ -15,6 +16,8 @@ const Header = () => {
     const navigate = useNavigate();
 
     const [isLoggedIn,setIsLoggedIn] = useAuth();
+
+    const {user1} = useContext(userContext);
 
     useEffect(()=>{
         if (getLocalStorage==null){
@@ -37,6 +40,7 @@ const Header = () => {
                 </ul>
             </div>
             <h1>{isOnline ? "✅":"🔴"}</h1>
+            <span><h1 className="p-18 font-bold text-red ">{user1.name}</h1></span>
             {
                 isLoggedIn ?
                 (<button onClick={()=>{
