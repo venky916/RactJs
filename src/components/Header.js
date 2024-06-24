@@ -5,6 +5,7 @@ import useOnline from "../utils/useOnline";
 import useLocalStorage from "../utils/useLocalStorage";
 import useAuth from "../utils/useAuth";
 import userContext from "../utils/userContext";
+import { useSelector } from "react-redux";
 
 export const Title = () => (
     <a href='/'> <img className="h-28  p-2" src={Logo} alt='logo' /></a>
@@ -18,6 +19,9 @@ const Header = () => {
     const [isLoggedIn,setIsLoggedIn] = useAuth();
 
     const {user1} = useContext(userContext);
+
+    const cartItems = useSelector(store =>store.cart.items);
+    // console.log(cartItems);
 
     useEffect(()=>{
         if (getLocalStorage==null){
@@ -35,8 +39,10 @@ const Header = () => {
                     <li className="px-2"><Link to="/">Home</Link></li>
                     <li className="px-2"><Link to="/about">About</Link></li>
                     <li className="px-2"><Link to="/contact">Contact</Link></li>
-                    <li className="px-2">Cart</li>
                     <li className="px-2"><Link to="/instamart">InstaMart</Link></li>
+
+                    <li className="px-2"><Link to="/cart"> Cart {cartItems.length} -items </Link></li>
+
                 </ul>
             </div>
             <h1>{isOnline ? "✅":"🔴"}</h1>

@@ -12,6 +12,11 @@ import Shimmer from './components/schimmerUI';
 import Login from './components/Login'
 import userContext from './utils/userContext';
 
+import { Provider } from 'react-redux';
+import store from './utils/store';
+
+import Cart from './components/Cart';
+
 const Instamart = lazy(() => import("./components/InstaMart"));
 const About = lazy(() => import("./components/About"));
 
@@ -22,13 +27,16 @@ const AppLayout = () => {
     })
 
     return (
-        <>
-        <userContext.Provider value= {{user1:user1,setUser1:setUser1}}>
+        <Provider store={store}>
+        <userContext.Provider value= {
+            {user1:user1,
+            setUser1:setUser1}
+        }>
             <Header />
             <Outlet />
             <Footer />
         </userContext.Provider>
-        </>
+        </Provider>
     )
 }
 
@@ -40,7 +48,7 @@ const appRouter = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Body user={{ name: "Namaste React", email: "support@namstedev.com" }} />,
+                element: <Body />,
             },
             {
                 path: '/about',
@@ -66,6 +74,10 @@ const appRouter = createBrowserRouter([
                     <Instamart />
                 </Suspense>),
             },
+            {
+                path :"/cart",
+                element : <Cart />
+            }
         ],
     },
     {

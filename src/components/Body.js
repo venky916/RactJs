@@ -8,7 +8,7 @@ import useOnline  from "../utils/useOnline"
 import userContext from "../utils/userContext";
 
 
-const Body = ({user}) => {
+const Body = () => {
     const [searchText, setSearchText] = useState("");
     const allRestaurants = useRestaurant();
     const [fillteredRestaurants, setFillteredRestaurants] = useState(null);
@@ -61,7 +61,7 @@ const Body = ({user}) => {
                 ) : (
                     fillteredRestaurants.map((restaurant) => (
                         <Link to={"/restaurant/" + restaurant?.info?.id} key={restaurant?.info?.id}>
-                            <RestaurantCard {...restaurant.info} user={user} />
+                            <RestaurantCard {...restaurant.info}  />
                         </Link>
                     ))
                 )}
