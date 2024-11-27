@@ -16,6 +16,8 @@ import { Provider } from 'react-redux';
 import store from './utils/store';
 
 import Cart from './components/Cart';
+import Demo from './components/Demo';
+import Demo2 from './components/Demo2';
 
 const Instamart = lazy(() => import("./components/InstaMart"));
 const About = lazy(() => import("./components/About"));
@@ -77,7 +79,16 @@ const appRouter = createBrowserRouter([
             {
                 path :"/cart",
                 element : <Cart />
-            }
+            },
+            {
+                path: '/demo',
+                element: (
+                    < div className='flex m-2 p-2 w-100 h-100'>
+                        <Demo />
+                        <Demo2 />
+                    </div>
+                ),
+            },
         ],
     },
     {

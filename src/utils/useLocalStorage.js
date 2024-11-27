@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useLocalStorage = (key) => {
+    
     const getInitialValue = () => {
         const localStorageValue = localStorage.getItem(key);
         try {
